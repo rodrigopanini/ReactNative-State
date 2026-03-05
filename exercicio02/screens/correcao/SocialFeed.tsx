@@ -33,20 +33,20 @@ export default function SocialFeed() {
   return (
     <View style={{ flex: 1, backgroundColor: "#e1e1e1", 
                    gap: 9, padding: 9 }}>
-                    <FlatList
-                      data={listaSocialFeed}
-                      renderItem={({item}) => (
-                        <CardSocialFeed 
-                          urlImagem={item.urlImagem}
-                          nome={item.nome}
-                          descricao={item.descricao}
-                          texto={item.texto}
-                          likes={item.likes}
-                        />
-                      )}
-                      keyExtractor={(item) => item.id.toString()}
-                      ItemSeparatorComponent={() => <View style={{padding: 5}} />}
-                    />
+          <FlatList
+            data={listaSocialFeed}
+            renderItem={({item}) => (
+              <CardSocialFeed 
+                urlImagem={item.urlImagem}
+                nome={item.nome}
+                descricao={item.descricao}
+                texto={item.texto}
+                likes={item.likes}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+            ItemSeparatorComponent={() => <View style={{padding: 5}} />}
+          />
     </View>
   )
 }
