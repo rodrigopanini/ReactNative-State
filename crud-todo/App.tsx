@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import Input from './components/Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import ItemLista from './components/ItemLista';
 
 type Tarefa = {
-  id: number;
+  id: string;
   nome: string;
 }
 
@@ -28,6 +28,12 @@ export default function App() {
     //Limpar o input
     setNomeTarefa('');
   }
+
+  //método para ser executado ao mostrar a tela 
+  // useEffect
+  useEffect(() => {
+    console.log('Tela carregada');
+  }, [])
 
   return (
     <View style={styles.container}>
