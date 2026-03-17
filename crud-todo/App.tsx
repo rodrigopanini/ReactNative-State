@@ -4,11 +4,16 @@ import Input from './components/Input';
 import { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import ItemLista from './components/ItemLista';
+import { createFirestoreService } from './services/firestoreService';
+import { db } from './services/firebase';
 
 type Tarefa = {
-  id: string;
+  id?: string;
   nome: string;
 }
+
+//Criar o serviço para acessar a coleção de tarefas
+const tarefaService = createFirestoreService<Tarefa>(db, "tarefas");
 
 export default function App() {
   // Criar o state para nosso crud de tarefas
@@ -18,21 +23,33 @@ export default function App() {
   function adicionarTarefa() {
     //Criar um objeto tarefa
     const novaTarefa: Tarefa = {
-      id: listaTarefas.length + 1,
       nome: nomeTarefa,
     }
 
     //Adicionar essa nova tarefa na lista de tarefas
-    setListaTarefas([...listaTarefas, novaTarefa]);
+    tarefaService.insert(novaTarefa);
 
     //Limpar o input
     setNomeTarefa('');
   }
 
+  // Função para remover uma tarefa
+  function removerTarefa(id: string) {
+    tarefaService.delete(id);
+  }
+
+  // Função para alterar uma tarefa
+  function alterarTarefa(id: string, nome: string) {
+    tarefaService.update(id, { nome });
+  }
+
   //método para ser executado ao mostrar a tela 
   // useEffect
   useEffect(() => {
-    console.log('Tela carregada');
+    //Inscrever o serviço para receber as atualizações da coleção de tarefas
+    tarefaService.subscribe((data: Tarefa[]) => {
+      setListaTarefas(data)
+    })
   }, [])
 
   return (
@@ -49,8 +66,13 @@ export default function App() {
       </View>
       <FlatList   
         data={listaTarefas} 
-        renderItem={({item}) => <ItemLista nome={item.nome} />}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={({item}) => (
+              <ItemLista nome={item.nome} 
+              id={item.id} 
+              alterar={alterarTarefa}
+              remover={removerTarefa} />
+        )}
+        keyExtractor={(item) => item.id ?? ''}
       />
     </View>
   );
