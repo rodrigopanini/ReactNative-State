@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderWidth: 1,
       borderRadius: 5,
-      padding: 7,
+      padding: 3,
       flex: 1,
     }
 })
