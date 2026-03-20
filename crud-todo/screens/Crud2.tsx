@@ -3,6 +3,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import Input from "../components/Input";
 import { createFirestoreService } from '../services/firestoreService';
 import { db } from '../services/firebase';
+import ItemListaProduto from "../components/ItemListaProduto";
 
 type Produto = {
     id?: string;
@@ -24,6 +25,14 @@ export default function Crud2() {
         }
 
         produtoService.insert(novoProduto);
+    }
+
+    function removerProduto(id: string) {
+        produtoService.delete(id);
+    }
+
+    function alterarProduto(id: string, nome: string, descricao: string) {
+        produtoService.update(id, { nome, descricao });
     }
 
     useEffect(() => {
@@ -53,11 +62,13 @@ export default function Crud2() {
             data={listaProduto}
             renderItem={({item}) =>
                 (
-                    <View>
-                        <Pressable>Editar</Pressable>
-                        <Text>{item.nome} - {item.descricao}</Text>
-                        <Pressable>Remover</Pressable>
-                    </View>
+                    <ItemListaProduto
+                        id={item.id}
+                        nome={item.nome}
+                        descricao={item.descricao}
+                        alterar={alterarProduto}
+                        remover={removerProduto}
+                    />
                 )
             }
             keyExtractor={(item) => item.id!}
@@ -75,5 +86,16 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
         marginLeft: 10,
+    },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    btnEditar: {
+        backgroundColor: 'orange',
+        marginRight: 5,
+    },
+    btnRemover: {
+        backgroundColor: 'red',
     },
 });
