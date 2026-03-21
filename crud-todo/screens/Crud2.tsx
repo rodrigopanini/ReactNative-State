@@ -25,6 +25,9 @@ export default function Crud2() {
         }
 
         produtoService.insert(novoProduto);
+
+        setDescricao("");
+        setNome("");
     }
 
     function removerProduto(id: string) {
