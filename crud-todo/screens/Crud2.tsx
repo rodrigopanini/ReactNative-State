@@ -86,9 +86,10 @@ const styles = StyleSheet.create({
     },
     botao: {
         backgroundColor: 'blue',
-        padding: 10,
+        padding: 3,
         justifyContent: 'center',
         marginLeft: 10,
+        borderRadius: 5,
     },
     item: {
         flexDirection: 'row',
