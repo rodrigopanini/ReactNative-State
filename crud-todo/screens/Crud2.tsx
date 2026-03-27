@@ -41,7 +41,7 @@ export default function Crud2() {
     useEffect(() => {
         produtoService.subscribe((data) => {
             setListaProduto(data);
-        })
+        })        
     }, [])
   
   return (
