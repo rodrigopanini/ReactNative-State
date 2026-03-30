@@ -20,7 +20,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      
+      <FlatList
+        data={listaToDo}
+        keyExtractor={item => item.id!}
+        renderItem={({ item }) => <Text>{item.nome}</Text>}
+      />
+      <StatusBar style="auto" />
     </View>
   );
 }
